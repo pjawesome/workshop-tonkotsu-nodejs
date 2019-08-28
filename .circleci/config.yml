@@ -8,11 +8,7 @@ jobs:
       - run: npm install 
       - run: mkdir junit
       - run: npm install mocha-junit-reporter # just for CircleCI
-      - run:
-          command: mocha test --reporter mocha-junit-reporter
-          environment:
-            MOCHA_FILE: junit/test-results.xml
-          when: always
+      - run: npm run report-mocha
       - store_test_results:
           path: /junit
       - store_artifacts:
