@@ -46,6 +46,7 @@ jobs:
             echo "export GITHUB_DEPLOY_ID=$(echo $GH_RESPONSE |  jq --raw-output '.id')" >> $BASH_ENV
       - heroku/install
       - heroku/deploy-via-git
+          force: true
       - run:
           name: Set Successful GitHub Deployment Status (staging)
           command: |
@@ -75,6 +76,7 @@ jobs:
       - heroku/install
       - heroku/deploy-via-git: 
           app-name: $HEROKU_APP_NAME_PROD
+          force: true
       - run:
           name: Set Successful GitHub Deployment Status
           command: |
