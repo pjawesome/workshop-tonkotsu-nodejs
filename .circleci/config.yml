@@ -43,7 +43,8 @@ jobs:
       - checkout
       - heroku/install
       - heroku/deploy-via-git
-        app-name: $HEROKU_APP_NAME_PROD
+        parameters:
+          app-name: $HEROKU_APP_NAME_PROD
         
 
 
