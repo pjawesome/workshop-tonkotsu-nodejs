@@ -6,14 +6,12 @@ workflows:
     jobs:
       - build
       - deploy_staging:
-        requires:
-          - build
+        requires: build
         filters:
           branches:
             ignore: master
       - deploy_prod:
-        requires:
-          - build
+        requires: build
         filters:
           branches:
             only: master
