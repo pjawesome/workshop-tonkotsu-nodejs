@@ -45,7 +45,7 @@ jobs:
           name: Create GitHub Deployment
           command: |
             GH_URL='https://api.github.com/repos/pjawesome/workshop-tonkotsu-nodejs/deployments'
-            GH_RESPONSE=$(curl -X POST -H "Accept: application/vnd.github.ant-man-preview+json" -H "Authorization: token $GITHUB_TOKEN" --data '{"ref":  "master", "environment": "production", "required_contexts": []}' $GH_URL)
+            GH_RESPONSE=$(curl -X POST -H "Accept: application/vnd.github.ant-man-preview+json" -H "Authorization: token $GITHUB_TOKEN" --data '{"ref":  "master", "environment": "production", "required_contexts": []}' $GH_URL |  jq --raw-output '.id')
             echo "GitHub Deployment ID: $GH_RESPONSE"
             echo "export GITHUB_DEPLOY_ID=$GH_RESPONSE" >> $BASH_ENV
       - heroku/install
