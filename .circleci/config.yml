@@ -51,14 +51,14 @@ jobs:
           name: Set Successful GitHub Deployment Status (staging)
           command: |
             GH_URL="https://api.github.com/repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/deployments/$GITHUB_DEPLOY_ID/statuses"
-            GH_RESPONSE=$(curl -X POST -H "Accept: application/vnd.github.ant-man-preview+json" -H "Authorization: token $GITHUB_TOKEN" --data '{"state": "success", "environment": "staging"}' $GH_URL)
+            GH_RESPONSE=$(curl -X POST -H "Accept: application/vnd.github.ant-man-preview+json" -H "Authorization: token $GITHUB_TOKEN" --data '{"state": "success", "environment": "staging", "environment_url": "https://'"$HEROKU_APP_NAME"'.herokuapp.com"}' $GH_URL)
             echo "GitHub API Status: $GH_RESPONSE"
           when: on_success
       - run:
           name: Set Failed GitHub Deployment Status (staging)
           command: |
             GH_URL="https://api.github.com/repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/deployments/$GITHUB_DEPLOY_ID/statuses"
-            GH_RESPONSE=$(curl -X POST -H "Accept: application/vnd.github.ant-man-preview+json" -H "Authorization: token $GITHUB_TOKEN" --data '{"state": "error", "environment": "staging"}' $GH_URL)
+            GH_RESPONSE=$(curl -X POST -H "Accept: application/vnd.github.ant-man-preview+json" -H "Authorization: token $GITHUB_TOKEN" --data '{"state": "error", "environment": "staging",  "environment_url": "https://'"$HEROKU_APP_NAME"'.herokuapp.com"}' $GH_URL)
             echo "GitHub API Status: $GH_RESPONSE"
           when: on_fail
   deploy_prod:
@@ -81,13 +81,13 @@ jobs:
           name: Set Successful GitHub Deployment Status
           command: |
             GH_URL="https://api.github.com/repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/deployments/$GITHUB_DEPLOY_ID/statuses"
-            GH_RESPONSE=$(curl -X POST -H "Accept: application/vnd.github.ant-man-preview+json" -H "Authorization: token $GITHUB_TOKEN" --data '{"state": "success", "environment": "production"}' $GH_URL)
+            GH_RESPONSE=$(curl -X POST -H "Accept: application/vnd.github.ant-man-preview+json" -H "Authorization: token $GITHUB_TOKEN" --data '{"state": "success", "environment": "production",  "environment_url": "https://'"$HEROKU_APP_NAME_PROD"'.herokuapp.com"}' $GH_URL)
             echo "GitHub API Status: $GH_RESPONSE"
           when: on_success
       - run:
           name: Set Failed GitHub Deployment Status
           command: |
             GH_URL="https://api.github.com/repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/deployments/$GITHUB_DEPLOY_ID/statuses"
-            GH_RESPONSE=$(curl -X POST -H "Accept: application/vnd.github.ant-man-preview+json" -H "Authorization: token $GITHUB_TOKEN" --data '{"state": "error", "environment": "production"}' $GH_URL)
+            GH_RESPONSE=$(curl -X POST -H "Accept: application/vnd.github.ant-man-preview+json" -H "Authorization: token $GITHUB_TOKEN" --data '{"state": "error", "environment": "production",  "environment_url": "https://'"$HEROKU_APP_NAME_PROD"'.herokuapp.com"}' $GH_URL)
             echo "GitHub API Status: $GH_RESPONSE"
           when: on_fail
