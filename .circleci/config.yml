@@ -5,4 +5,9 @@ jobs:
       - image: circleci/node:latest
     steps:
       - checkout
-      - run: npm install && npm run test
+      - run: npm install 
+      - run: npm install mocha-junit-reporter # just for CircleCI
+      - run: mkdir reports
+      - run: mocha test --reporter mocha-junit-reporter --reporter-options mochaFile=reports/mocha/test-results.xml
+      - store_test_results:
+          path: reports
