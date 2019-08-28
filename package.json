@@ -10,7 +10,7 @@
     "lint": "eslint */**.js",
     "test": "nyc mocha",
     "report-coverage": "nyc report --reporter=text-lcov > coverage.lcov && codecov"
-    "report": "mocha test --reporter mocha-junit-reporter --reporter-options mochaFile=junit/test-results.xml"
+    "report-mocha": "mocha test --reporter mocha-junit-reporter --reporter-options mochaFile=junit/test-results.xml"
   },
   "dependencies": {
     "chalk": "^2.4.2",
