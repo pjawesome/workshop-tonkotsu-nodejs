@@ -14,9 +14,9 @@ workflows:
       - deploy_prod:
         requires:
           - build
-          filters:
-            branches:
-              only: master
+        filters:
+          branches:
+            only: master
 jobs:
   build:
     docker:
