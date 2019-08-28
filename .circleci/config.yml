@@ -42,9 +42,8 @@ jobs:
     steps:
       - checkout
       - heroku/install
-      - heroku/deploy-via-git
-        parameters:
-          app-name: $HEROKU_APP_NAME_PROD
+      - heroku/deploy-via-git 
+        app-name: tonkotsu-pjawesome-prod
         
 
 
