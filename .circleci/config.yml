@@ -41,7 +41,7 @@ jobs:
     executor: heroku/default
     steps:
       - checkout
-       - run:
+      - run:
           name: Create GitHub Deployment
           command: |
             GH_URL='https://api.github.com/repos/pjawesome/workshop-tonkotsu-nodejs/deployments'
