@@ -41,15 +41,25 @@ jobs:
     executor: heroku/default
     steps:
       - checkout
-      - heroku/install
-      - heroku/deploy-via-git: 
-          app-name: $HEROKU_APP_NAME_PROD
-      - run:
+       - run:
           name: Create GitHub Deployment
           command: |
             GH_URL='https://api.github.com/repos/pjawesome/workshop-tonkotsu-nodejs/deployments'
             GH_RESPONSE=$(curl -X POST -H "Accept: application/vnd.github.ant-man-preview+json" -H "Authorization: token $GITHUB_TOKEN" --data '{"ref":  "master", "environment": "production", "required_contexts": []}' $GH_URL)
+            echo "GitHub Deployment ID: $GH_RESPONSE"
+            echo "export GITHUB_DEPLOY_ID=$GH_RESPONSE" >> $BASH_ENV
+      - heroku/install
+      - heroku/deploy-via-git: 
+          app-name: $HEROKU_APP_NAME_PROD
+      - run:
+          name: Set Successful GitHub Deployment Status
+          command: |
+            GH_URL='https://api.github.com/repos/pjawesome/workshop-tonkotsu-nodejs/deployments/$GITHUB_DEPLOY_ID/statuses/'
+            GH_RESPONSE=$(curl -X POST -H "Accept: application/vnd.github.ant-man-preview+json" -H "Authorization: token $GITHUB_TOKEN" --data '{"state": "success", "environment": "production"}' $GH_URL)
             echo "GitHub API Status: $GH_RESPONSE"
-
+          when: on_success
+        
+      
+     
 
 
