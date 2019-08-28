@@ -6,17 +6,17 @@ workflows:
     jobs:
       - build
       - deploy_staging:
-        requires:
-          - build
-        filters:
-          branches:
-            ignore: master
+          requires:
+            - build
+          filters:
+            branches:
+              ignore: master
       - deploy_prod:
-        requires:
-          - build
-        filters:
-          branches:
-            only: master
+          requires:
+            - build
+          filters:
+            branches:
+              only: master
 jobs:
   build:
     docker:
