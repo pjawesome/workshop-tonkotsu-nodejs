@@ -5,13 +5,13 @@ workflows:
   build_deploy:
     jobs:
       - build
-      - deploy:
+      - deploy_staging:
         requires:
           - build
         filters:
           branches:
             ignore: master
-      - deploy:
+      - deploy_prod:
         requires:
           - build
           filters:
@@ -31,9 +31,17 @@ jobs:
           path: junit
       - store_artifacts:
           path: junit
-  deploy:
+  deploy_staging:
     executor: heroku/default
     steps:
       - checkout
       - heroku/install
       - heroku/deploy-via-git
+  deploy_prod:
+    executor: heroku/default
+    steps:
+      - checkout
+      - heroku/install
+      - heroku/deploy-via-git
+        - app-name: $HEROKU_APP_NAME_PROD
+
