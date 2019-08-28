@@ -4,10 +4,7 @@ orbs:
 workflows:
   heroku_deploy:
     jobs:
-      - deploy
-    branches:
-      ignore:
-        - master
+      - deploy-staging
 jobs:
   build:
     docker:
@@ -22,8 +19,11 @@ jobs:
           path: junit
       - store_artifacts:
           path: junit
-  deploy:
+  deploy-staging:
     executor: heroku/default
+    branches:
+      ignore: 
+       - master
     steps:
       - checkout
       - heroku/install
