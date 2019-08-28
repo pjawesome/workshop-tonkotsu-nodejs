@@ -69,9 +69,9 @@ jobs:
           name: Create GitHub Deployment
           command: |
             GH_URL="https://api.github.com/repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/deployments"
-            GH_RESPONSE=$(curl -X POST -H "Accept: application/vnd.github.ant-man-preview+json" -H "Authorization: token $GITHUB_TOKEN" --data '{"ref": "'"$CIRCLE_SHA1"'", "environment": "production", "required_contexts": []}' $GH_URL |  jq --raw-output '.id')
+            GH_RESPONSE=$(curl -X POST -H "Accept: application/vnd.github.ant-man-preview+json" -H "Authorization: token $GITHUB_TOKEN" --data '{"ref": "'"$CIRCLE_SHA1"'", "environment": "production", "required_contexts": []}' $GH_URL)
             echo "GitHub Deployment ID: $GH_RESPONSE from $GH_URL"
-            echo "export GITHUB_DEPLOY_ID=$GH_RESPONSE" >> $BASH_ENV
+            echo "export GITHUB_DEPLOY_ID=$(echo $GH_RESPONSE |  jq --raw-output '.id')" >> $BASH_ENV
       - heroku/install
       - heroku/deploy-via-git: 
           app-name: $HEROKU_APP_NAME_PROD
