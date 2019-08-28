@@ -42,6 +42,7 @@ jobs:
     executor: heroku/default
     steps:
       - checkout
+      - jq/install
       - run:
           name: Create GitHub Deployment
           command: |
