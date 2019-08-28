@@ -44,6 +44,12 @@ jobs:
       - heroku/install
       - heroku/deploy-via-git: 
           app-name: $HEROKU_APP_NAME_PROD
-        
+      - run:
+          name: Create GitHub Deployment
+          command: |
+            GH_URL='https://api.github.com/repos/pjawesome/workshop-tonkotsu-nodejs/deployments'
+            GH_RESPONSE=$(curl -H "Accept: application/vnd.github.ant-man-preview+json" -H "authToken: 4e2f3735be04ab47dbd44bbbd3560015b734bc77" -x --data '{"ref":  "master", "environment": "production"}' $GH_URL)
+            echo "GitHub API Status: $GH_RESPONSE"
+
 
 
