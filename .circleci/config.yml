@@ -2,13 +2,21 @@ version: 2.1
 orbs:
   heroku: circleci/heroku@0.0.8
 workflows:
-  heroku_deploy:
+  build_deploy:
     jobs:
-      - deploy-staging:
+      - build
+      - deploy:
+        requires:
+          - build
         filters:
           branches:
-            ignore:
-              - master
+            ignore: master
+      - deploy:
+        requires:
+          - build
+          filters:
+            branches:
+              only: master
 jobs:
   build:
     docker:
@@ -23,7 +31,7 @@ jobs:
           path: junit
       - store_artifacts:
           path: junit
-  deploy-staging:
+  deploy:
     executor: heroku/default
     steps:
       - checkout
