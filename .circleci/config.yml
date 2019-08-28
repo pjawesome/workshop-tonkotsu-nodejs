@@ -10,6 +10,6 @@ jobs:
       - run: npm install mocha-junit-reporter # just for CircleCI
       - run: npm run report-mocha
       - store_test_results:
-          path: /junit
+          path: junit
       - store_artifacts:
-          path: /junit
+          path: junit
