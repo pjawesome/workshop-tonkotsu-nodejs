@@ -60,6 +60,13 @@ jobs:
             GH_RESPONSE=$(curl -X POST -H "Accept: application/vnd.github.ant-man-preview+json" -H "Authorization: token $GITHUB_TOKEN" --data '{"state": "success", "environment": "production"}' $GH_URL)
             echo "GitHub API Status: $GH_RESPONSE"
           when: on_success
+      - run:
+          name: Set Successful GitHub Deployment Status
+          command: |
+            GH_URL="https://api.github.com/repos/pjawesome/workshop-tonkotsu-nodejs/deployments/$GITHUB_DEPLOY_ID/statuses"
+            GH_RESPONSE=$(curl -X POST -H "Accept: application/vnd.github.ant-man-preview+json" -H "Authorization: token $GITHUB_TOKEN" --data '{"state": "error", "environment": "production"}' $GH_URL)
+            echo "GitHub API Status: $GH_RESPONSE"
+          when: on_fail
         
       
      
