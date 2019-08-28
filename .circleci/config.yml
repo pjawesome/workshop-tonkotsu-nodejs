@@ -1,4 +1,13 @@
-version: 2
+version: 2.1
+orbs:
+  heroku: circleci/heroku@1.0.0
+workflows:
+  heroku_deploy:
+    jobs:
+      - deploy
+    branches:
+      ignore:
+        - master
 jobs:
   build:
     docker:
@@ -13,3 +22,9 @@ jobs:
           path: junit
       - store_artifacts:
           path: junit
+  deploy:
+    executor: heroku/default
+    steps:
+      - checkout
+      - heroku/install
+      - heroku/deploy-via-git
